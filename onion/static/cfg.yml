@@ -1,0 +1,13 @@
+dedupe: no
+strip_punc: yes
+
+clear_fields:
+  - spicy
+  - thin
+
+map_words:
+  stuff: ham
+  things: ham
+
+stop_words:
+  - knife

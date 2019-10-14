@@ -1,0 +1,6 @@
+pytest-coverage
+pytest
+pyyaml
+pandas
+gensim
+nltk

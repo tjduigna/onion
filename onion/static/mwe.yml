@@ -1,0 +1,45 @@
+graph:
+  primary: food
+  food:
+    - cheese
+    - bread
+  cheese:
+    - provolone
+    - swiss
+  bread:
+    - whole wheat
+    - white
+
+data:
+  food:
+    name:
+        - cheddar cheese
+        - chunky cheese
+        - one ounce provolone
+        - half pound american
+    desc:
+        - sharp cheddar
+        - sliced thin
+        - things..
+        - stuff%$#
+  cheese:
+    name:
+        - cheese
+        - sliced
+        - swiss
+        - cheese curd
+    desc:
+        - shredded cheddar
+        - swiss
+        - sharp
+        - knife
+  bread:
+    name:
+        - sliced wheat
+        - 9 grain
+        - white bread
+    desc:
+        - one slice
+        - wheat bread
+        - spicy loaf
+
