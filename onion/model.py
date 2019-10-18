@@ -26,6 +26,7 @@ class Model(Processor):
         Args:
             entities (pd.DataFrame): data
         """
+        entities = self._to_df(entities)
         s = self.tokenize(entities)
         bow = s.apply(self.ref.doc2bow)
         tfs = bow.apply(self.tfidf.__getitem__)
@@ -38,13 +39,21 @@ class Model(Processor):
         s1 = pd.Series(d1)
         ret = pd.DataFrame.from_dict({
             'sample': d0,
-            'guess': s0.map(s),
+            'guess': s0.map(s).apply(' '.join),
             'conf': ans[(d0, d1)],
-            'check': s1.map(dict(enumerate(self.tokens))),
+            'check': s1.map(dict(enumerate(self.tokens))).apply(' '.join),
         })
         if self.index is not None:
             ret['index'] = s1.map(dict(enumerate(self.index)))
         return ret
+
+    def _to_df(self, df):
+        if not isinstance(df, pd.DataFrame):
+            try:
+                df = pd.DataFrame(df)
+            except ValueError:
+                raise
+        return df
 
     def __init__(self, df, cfg=None, path=None, idx_col='index'):
         """Builds a gensim model and exposes a convenient
@@ -56,11 +65,7 @@ class Model(Processor):
             cfg (str,dict): configuration for Processor
             path (str): location for model saving
         """
-        if not isinstance(df, pd.DataFrame):
-            try:
-                df = pd.DataFrame(df)
-            except ValueError:
-                raise
+        df = self._to_df(df)
         super().__init__(cfg)
         self.path = self._init_path(path)
         self.index = None

@@ -68,6 +68,8 @@ class Onion:
             self._graph_models[key] = self.init_model(vals)
         self._graph[self._primary] = prim
         # The actual models on real data
+        if self._data is None:
+            return
         prim = self._data.pop(self._primary)
         self._models[self._primary] = self.init_model(prim)
         for key, vals in self._data.items():
