@@ -38,6 +38,7 @@ class Model(Processor):
         d1  = idxs.flatten()
         s1 = pd.Series(d1)
         ret = pd.DataFrame.from_dict({
+            'id': range(len(d0)),
             'sample': d0,
             'guess': s0.map(s).apply(' '.join),
             'conf': ans[(d0, d1)],
