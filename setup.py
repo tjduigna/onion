@@ -11,3 +11,5 @@ with open('requirements.txt', 'r') as f:
 
 setup(name='onion',
       install_requires=deps)
+
+print("you must run nltk.download('punkt') for downstream")
