@@ -9,12 +9,27 @@ import logging.config
 
 _cfg = {}
 _root = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(_root, 'conf', 'log.yml'), 'r') as f:
+    logging.config.dictConfig(yaml.safe_load(f.read()))
 _home = os.path.expanduser('~')
 _base = os.path.join(_home, '.onion')
 _log = logging.getLogger(__name__)
+_log.setLevel(logging.DEBUG)
 
 
 if not os.path.isdir(_base): os.makedirs(_base)
+
+
+class Log:
+
+    @property
+    def log(self):
+        return logging.getLogger(
+            '.'.join([
+                self.__module__,
+                self.__class__.__name__
+            ])
+        )
 
 
 def load_yml(abspath, cache=False):
