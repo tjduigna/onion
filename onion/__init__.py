@@ -60,3 +60,4 @@ def load_yml(abspath, cache=False):
 from onion.processor import Processor
 from onion.model import Model
 from onion.onion import Onion
+from onion import orm
