@@ -9,7 +9,7 @@ import onion
 from onion.model import Model
 
 
-class Onion:
+class Onion(onion.Log):
     """Heirarchical architecture for some
     NLP models provided by gensim. Assumes
     complex input data structures.
@@ -44,6 +44,25 @@ class Onion:
                    graph=graph, data=arch.pop('data'),
                    cfg=cfg)
 
+    def predict(self, key, samples, topn=5):
+        """Run entity recognition against samples
+        and return the topn responses.
+
+        Args:
+            key (str): model name
+            samples (any): input data
+            topn (int): return top N responses per sample
+
+        Returns:
+            results (pd.DataFrame): best matches
+        """
+        if isinstance(samples, str):
+            samples = [samples]
+        try:
+            return self._models[key].predict(samples).iloc[:topn]
+        except KeyError:
+            return self._graph_models[key].predict(samples).iloc[:topn]
+
     def init_model(self, df, cfg=None, path=None):
         """Create a new onion Model from a dataframe.
 
@@ -51,6 +70,9 @@ class Onion:
             df (pd.DataFrame): the data
             cfg (str,dict): processor config
             path (str): path to model storage location
+
+        Returns:
+            model (onion.Model): an entity recognizer
         """
         cfg = cfg or self._cfg
         path = path or self._path
